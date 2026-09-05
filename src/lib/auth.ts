@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import type { Role } from "@/types";
+import { dbConnect } from "@/lib/mongodb";
 import User from "@/models/User";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me";
@@ -75,6 +76,7 @@ export async function getCurrentUser() {
   if (!payload) return null;
 
   try {
+    await dbConnect();
     const user = await User.findById(payload.userId).lean();
     if (!user || user.blocked) return null;
     return user;
