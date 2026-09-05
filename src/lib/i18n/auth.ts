@@ -1,0 +1,51 @@
+export const messages: Record<string, string> = {
+  "Unable to log in.": "লগইন করা সম্ভব হয়নি।",
+  "Welcome back!": "স্বাগতম!",
+  "Log in to access your account": "আপনার অ্যাকাউন্টে প্রবেশ করতে লগইন করুন",
+  Login: "লগইন",
+  "Phone or email": "ফোন বা ইমেইল",
+  Password: "পাসওয়ার্ড",
+  "Hide password": "পাসওয়ার্ড লুকান",
+  "Show password": "পাসওয়ার্ড দেখান",
+  "Logging in...": "লগইন হচ্ছে...",
+  "Forgot your password?": "পাসওয়ার্ড ভুলে গেছেন?",
+  "Create account": "অ্যাকাউন্ট তৈরি করুন",
+  "Unable to register.": "নিবন্ধন করা সম্ভব হয়নি।",
+  "Find services in Sherpur or become a provider": "শেরপুরে পরিষেবা খুঁজুন অথবা প্রদানকারী হোন",
+  Register: "রেজিস্টার",
+  Customer: "গ্রাহক",
+  Provider: "প্রদানকারী",
+  "Your name": "আপনার নাম",
+  "Phone number": "ফোন নম্বর",
+  "Email (optional)": "ইমেইল (ঐচ্ছিক)",
+  "Profile photo (optional)": "প্রোফাইল ছবি (ঐচ্ছিক)",
+  "Add a profile photo": "প্রোফাইল ছবি যোগ করুন",
+  "Change photo": "ছবি পরিবর্তন করুন",
+  Remove: "মুছুন",
+  "Account created, but the photo could not be uploaded.":
+    "অ্যাকাউন্ট তৈরি হয়েছে, তবে ছবিটি আপলোড করা যায়নি।",
+  "Minimum 6 characters": "ন্যূনতম ৬ অক্ষর",
+  "Creating account...": "অ্যাকাউন্ট তৈরি হচ্ছে...",
+  "Create provider account": "প্রদানকারী অ্যাকাউন্ট তৈরি করুন",
+  "Already have an account?": "ইতিমধ্যে অ্যাকাউন্ট আছে?",
+  "Please enter your phone or email": "আপনার ফোন বা ইমেইল দিন",
+  "Please enter your password": "আপনার পাসওয়ার্ড দিন",
+  "Please enter your name (minimum 2 letters)":
+    "আপনার নাম দিন (ন্যূনতম ২ অক্ষর)",
+  "Enter a valid Bangladesh phone number":
+    "একটি বৈধ বাংলাদেশি ফোন নম্বর দিন",
+  "Enter a valid email": "একটি বৈধ ইমেইল দিন",
+  "Password at least 6 characters":
+    "পাসওয়ার্ড কমপক্ষে ৬ অক্ষর হতে হবে",
+  "Password reset": "পাসওয়ার্ড রিসেট",
+  "Need help getting back into your account?":
+    "আপনার অ্যাকাউন্টে প্রবেশ করতে সাহায্য দরকার?",
+  "Contact support": "সাপোর্টের সাথে যোগাযোগ করুন",
+  "We don't have automated password resets yet. Please reach out to our support team and we'll help you reset your password manually.":
+    "আমাদের এখনো স্বয়ংক্রিয় পাসওয়ার্ড রিসেট নেই। দয়া করে আমাদের সাপোর্ট টিমের সাথে যোগাযোগ করুন, আমরা আপনাকে ম্যানুয়ালি পাসওয়ার্ড রিসেট করতে সাহায্য করব।",
+  "Include your phone number so we can verify your account.":
+    "আপনার ফোন নম্বর দিন যাতে আমরা আপনার অ্যাকাউন্ট যাচাই করতে পারি।",
+  "Call support": "সাপোর্টে কল করুন",
+  "Email support": "ইমেইল সাপোর্ট",
+  "Back to login": "লগইনে ফিরে যান",
+};
