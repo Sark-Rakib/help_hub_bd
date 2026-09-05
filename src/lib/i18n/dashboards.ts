@@ -133,6 +133,8 @@ export const messages: Record<string, string> = {
   Rating: "রেটিং",
   By: "দ্বারা",
   "Name and slug are required.": "নাম এবং স্লাগ প্রয়োজন।",
+  "Lowercase letters, numbers and hyphens only.":
+    "শুধুমাত্র ছোট হাতের অক্ষর, সংখ্যা এবং হাইফেন।",
   "Category created!": "বিভাগ তৈরি হয়েছে!",
   Verify: "যাচাই করুন",
   Unverify: "যাচাই বাতিল করুন",

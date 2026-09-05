@@ -15,6 +15,7 @@ import {
   Home,
   Phone,
   AlarmClock,
+  Code,
 } from "lucide-react";
 import type { Category, Location, RequestStatus } from "@/types";
 
@@ -35,7 +36,8 @@ export function formatBDT(amount: number): string {
 }
 
 export function formatBDTShort(amount: number): string {
-  if (amount >= 1000) return `${CURRENCY}${(amount / 1000).toFixed(amount % 1000 === 0 ? 0 : 1)}k`;
+  if (amount >= 1000)
+    return `${CURRENCY}${(amount / 1000).toFixed(amount % 1000 === 0 ? 0 : 1)}k`;
   return `${CURRENCY}${amount}`;
 }
 
@@ -62,8 +64,7 @@ const categoryMeta: Array<Omit<Category, "icon"> & { icon: LucideIcon }> = [
     slug: "ac-fridge-technician",
     name: "AC & Fridge Technician",
     nameBn: "",
-    description:
-      "AC gas charging, repair, servicing and refrigerator repair.",
+    description: "AC gas charging, repair, servicing and refrigerator repair.",
     icon: Snowflake,
     popular: true,
   },
@@ -116,8 +117,7 @@ const categoryMeta: Array<Omit<Category, "icon"> & { icon: LucideIcon }> = [
     slug: "cleaning-service",
     name: "Cleaning Service",
     nameBn: "",
-    description:
-      "Complete cleaning for your home, office or shop.",
+    description: "Complete cleaning for your home, office or shop.",
     icon: Sparkles,
     popular: true,
   },
@@ -148,6 +148,14 @@ const categoryMeta: Array<Omit<Category, "icon"> & { icon: LucideIcon }> = [
     icon: Refrigerator,
     popular: true,
   },
+  {
+    slug: "web-development",
+    name: "Web Development",
+    nameBn: "",
+    description: "Website design, development, maintenance and IT support.",
+    icon: Code,
+    popular: true,
+  },
 ];
 
 export const CATEGORIES: Category[] = categoryMeta.map((category) => {
@@ -157,7 +165,7 @@ export const CATEGORIES: Category[] = categoryMeta.map((category) => {
 });
 
 export const CATEGORY_ICONS: Record<string, LucideIcon> = Object.fromEntries(
-  categoryMeta.map(({ slug, icon }) => [slug, icon])
+  categoryMeta.map(({ slug, icon }) => [slug, icon]),
 );
 
 export function getCategoryBySlug(slug: string) {
@@ -182,11 +190,6 @@ export const DISTRICTS: Array<{ name: string; slug: string; areas: string[] }> =
       slug: "sherpur",
       areas: [
         "Sherpur Sadar",
-        "Nakla",
-        "Nalitabari",
-        "Sreebardi",
-        "Jhenaigati",
-        "Kaligonj",
         "Rajarpur",
         "Sherpur City Bus Stand",
         "Dhunot Mor",
@@ -210,7 +213,6 @@ export const DISTRICTS: Array<{ name: string; slug: string; areas: string[] }> =
         "Chonka",
         "Ranirhat",
         "Shalpa",
-        "Boalia",
         "Kalshimati",
         "Chakpathalia",
         "Modonpur",
@@ -225,7 +227,13 @@ export const DISTRICTS: Array<{ name: string; slug: string; areas: string[] }> =
     {
       name: "Bogura",
       slug: "bogura",
-      areas: ["Bogura Sadar", "Shibganj", "Gabtali", "Dupchanchia", "Adamdighi"],
+      areas: [
+        "Bogura Sadar",
+        "Shibganj",
+        "Gabtali",
+        "Dupchanchia",
+        "Adamdighi",
+      ],
     },
     {
       name: "Dhaka",
@@ -244,12 +252,10 @@ export const DISTRICTS: Array<{ name: string; slug: string; areas: string[] }> =
     },
   ];
 
-export const SHERPUR_LOCATIONS: Location[] = DISTRICTS[0].areas.map(
-  (area) => ({
-    district: "Sherpur",
-    area,
-  })
-);
+export const SHERPUR_LOCATIONS: Location[] = DISTRICTS[0].areas.map((area) => ({
+  district: "Sherpur",
+  area,
+}));
 
 export const DEFAULT_LOCATION: Location = {
   district: "Sherpur",
@@ -309,7 +315,7 @@ export const AREA_NAMES_BN: Record<string, string> = {
 /** "Dhunot Mor" → "ধুনট মোড় (Dhunot Mor)" — keeps the stored English key visible too. */
 export function prettyArea(
   area: string,
-  opts: { showEnglish?: boolean } = {}
+  opts: { showEnglish?: boolean } = {},
 ): string {
   const bn = AREA_NAMES_BN[area];
   const showEn = opts.showEnglish ?? true;
@@ -326,11 +332,36 @@ export const REQUEST_STATUSES: Array<{
   labelBn: string;
   color: string;
 }> = [
-  { value: "pending", label: "Pending", labelBn: "", color: "bg-amber-100 text-amber-700" },
-  { value: "accepted", label: "Accepted", labelBn: "", color: "bg-blue-100 text-blue-700" },
-  { value: "rejected", label: "Rejected", labelBn: "", color: "bg-red-100 text-red-700" },
-  { value: "completed", label: "Completed", labelBn: "", color: "bg-green-100 text-green-700" },
-  { value: "cancelled", label: "Cancelled", labelBn: "", color: "bg-gray-200 text-gray-600" },
+  {
+    value: "pending",
+    label: "Pending",
+    labelBn: "",
+    color: "bg-amber-100 text-amber-700",
+  },
+  {
+    value: "accepted",
+    label: "Accepted",
+    labelBn: "",
+    color: "bg-blue-100 text-blue-700",
+  },
+  {
+    value: "rejected",
+    label: "Rejected",
+    labelBn: "",
+    color: "bg-red-100 text-red-700",
+  },
+  {
+    value: "completed",
+    label: "Completed",
+    labelBn: "",
+    color: "bg-green-100 text-green-700",
+  },
+  {
+    value: "cancelled",
+    label: "Cancelled",
+    labelBn: "",
+    color: "bg-gray-200 text-gray-600",
+  },
 ];
 
 export function getRequestStatusMeta(status: RequestStatus) {

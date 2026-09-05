@@ -43,7 +43,15 @@ export async function POST(req: Request) {
 
     const { name, nameBn, slug, description, icon } = parsed.data;
 
-    const exists = await Category.findOne({ slug: generateSlug(slug) });
+    const normalizedSlug = generateSlug(slug);
+    if (!normalizedSlug) {
+      return NextResponse.json(
+        { success: false, error: "Enter a valid slug (e.g. electrician)." },
+        { status: 400 }
+      );
+    }
+
+    const exists = await Category.findOne({ slug: normalizedSlug });
     if (exists) {
       return NextResponse.json(
         { success: false, error: "A category with this slug already exists." },
@@ -54,7 +62,7 @@ export async function POST(req: Request) {
     const category = await Category.create({
       name,
       nameBn: nameBn || undefined,
-      slug: generateSlug(slug),
+      slug: normalizedSlug,
       description: description || undefined,
       icon: icon || undefined,
       popular: false,

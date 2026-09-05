@@ -23,6 +23,7 @@ import {
 } from "@/lib/constants";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
+import { useCategories } from "@/hooks/useQueries";
 import { uploadFile } from "@/lib/upload";
 
 const DAYS = [
@@ -69,6 +70,15 @@ export default function BecomeProviderPage() {
   const router = useRouter();
   const { user, refreshUser } = useAuth();
   const { t } = useLanguage();
+  const { data: dbCategories } = useCategories();
+  const categoryOptions = (() => {
+    const list = dbCategories && dbCategories.length > 0 ? dbCategories : CATEGORIES;
+    const seen = new Set(list.map((c) => c.slug));
+    return [
+      ...list,
+      ...CATEGORIES.filter((c) => !seen.has(c.slug)),
+    ];
+  })();
   const [workEnabled, setWorkEnabled] = useState(true);
   const [workOpen, setWorkOpen] = useState("09:00");
   const [workClose, setWorkClose] = useState("18:00");
@@ -307,7 +317,7 @@ export default function BecomeProviderPage() {
               {...register("category", becomeProviderSchema.category)}
             >
               <option value="">{t("Select category...")}</option>
-              {CATEGORIES.map((c) => (
+              {categoryOptions.map((c) => (
                 <option key={c.slug} value={c.slug}>
                   {c.name}
                 </option>

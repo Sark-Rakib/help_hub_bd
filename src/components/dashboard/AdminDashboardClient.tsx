@@ -619,8 +619,17 @@ function CategoriesTab() {
   const { data, isLoading } = useApi<AdminCategoryRec[]>(["admin", "categories"], "/api/admin/categories");
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
+  const [slugTouched, setSlugTouched] = useState(false);
   const [nameBn, setNameBn] = useState("");
   const [creating, setCreating] = useState(false);
+
+  const autoSlug = (value: string) =>
+    value
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
 
   const create = async () => {
     if (!name || !slug) {
@@ -632,17 +641,18 @@ function CategoriesTab() {
       const res = await fetch("/api/admin/categories", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, slug, nameBn, description: "" }),
+        body: JSON.stringify({ name, slug: autoSlug(slug), nameBn, description: "" }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Unable to create.");
       toast.success(t("Category created!"));
       setName("");
       setSlug("");
+      setSlugTouched(false);
       setNameBn("");
       await qc.invalidateQueries({ queryKey: ["admin", "categories"] });
-    } catch {
-      toast.error(t("Something went wrong."));
+    } catch (err) {
+      toast.error((err as Error).message || t("Something went wrong."));
     } finally {
       setCreating(false);
     }
@@ -655,8 +665,9 @@ function CategoriesTab() {
           <CardTitle className="text-base">{t("Add new category")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <Input placeholder={t("Name (English)")} value={name} onChange={(e) => setName(e.target.value)} />
-          <Input placeholder={t("Slug (e.g. tutor)")} value={slug} onChange={(e) => setSlug(e.target.value)} />
+          <Input placeholder={t("Name (English)")} value={name} onChange={(e) => { const v = e.target.value; setName(v); if (!slugTouched) setSlug(autoSlug(v)); }} />
+          <Input placeholder={t("Slug (e.g. tutor)")} value={slug} onChange={(e) => { setSlug(e.target.value); setSlugTouched(true); }} />
+          <p className="text-xs text-muted-foreground">{t("Lowercase letters, numbers and hyphens only.")}</p>
           <Input placeholder={t("Name (Bangla)")} value={nameBn} onChange={(e) => setNameBn(e.target.value)} />
           <Button onClick={create} disabled={creating} className="w-full">
             {creating ? <Loader2 className="size-4 animate-spin" /> : null} {t("Create")}

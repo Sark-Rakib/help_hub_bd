@@ -131,10 +131,7 @@ export type ReviewInput = z.infer<typeof reviewSchema>;
 export const categorySchema = z.object({
   name: z.string().min(2, "Enter a category name").max(80),
   nameBn: z.string().max(80).optional().or(z.literal("")),
-  slug: z
-    .string()
-    .min(2, "Enter a slug (e.g. electrician)")
-    .regex(/^[a-z0-9-]+$/, "Use only lowercase letters, numbers and hyphens in the slug"),
+  slug: z.string().min(1, "Enter a slug (e.g. electrician)").max(80),
   description: z.string().max(300).optional().or(z.literal("")),
   icon: z.string().max(50).optional().or(z.literal("")),
 });
