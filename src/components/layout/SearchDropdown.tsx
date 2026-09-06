@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
-import { getCategoryName, prettyArea } from "@/lib/constants";
+import { getCategoryIcon, getCategoryName, prettyArea } from "@/lib/constants";
 
 interface SearchSuggestion {
   _id: string;
@@ -17,6 +17,12 @@ interface SearchSuggestion {
   category: string;
   area?: string;
   photo?: string;
+}
+
+interface CategorySuggestion {
+  slug: string;
+  name: string;
+  nameBn?: string;
 }
 
 interface SearchDropdownProps {
@@ -31,10 +37,11 @@ export function SearchDropdown({
   trigger,
 }: SearchDropdownProps) {
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchSuggestion[]>([]);
+  const [categories, setCategories] = useState<CategorySuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -43,6 +50,7 @@ export function SearchDropdown({
     setOpen(false);
     setQuery("");
     setResults([]);
+    setCategories([]);
   };
 
   const toggle = () => {
@@ -84,6 +92,7 @@ export function SearchDropdown({
         const json = await res.json();
         if (res.ok && ctrl.signal.aborted === false) {
           setResults(json.data?.providers ?? []);
+          setCategories(json.data?.categories ?? []);
         }
       } catch {
         // ignore aborted / failed requests
@@ -165,52 +174,81 @@ export function SearchDropdown({
           </div>
 
           {showSuggestions && (
-            <ul
-              role="listbox"
-              className="max-h-72 overflow-y-auto p-1.5"
-            >
+            <div className="max-h-72 overflow-y-auto p-1.5">
               {loading && (
-                <li className="space-y-1.5 p-1.5">
+                <div className="space-y-1.5 p-1.5">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <div key={i} className="h-12 animate-pulse rounded-lg bg-muted" />
                   ))}
-                </li>
+                </div>
               )}
-              {!loading && results.length === 0 && (
-                <li className="px-3 py-6 text-center text-sm text-muted-foreground">
+
+              {!loading && categories.length > 0 && (
+                <div className="px-1 pt-1">
+                  <span className="block px-2 pb-1 text-xs font-medium text-muted-foreground">
+                    {t("Suggested categories")}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5 px-1 pb-2">
+                    {categories.map((cat) => {
+                      const Icon = getCategoryIcon(cat.slug);
+                      return (
+                        <button
+                          key={cat.slug}
+                          type="button"
+                          onClick={() => {
+                            closeSearch();
+                            router.push(`/search?category=${cat.slug}`);
+                          }}
+                          className="flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                        >
+                          <Icon className="size-3 text-primary" />
+                          {lang === "bn" ? (cat.nameBn || cat.name) : cat.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {!loading && results.length > 0 && (
+                <ul role="listbox" className="p-1.5 pt-0">
+                  {results.map((p) => (
+                    <li key={p._id}>
+                      <button
+                        type="button"
+                        onClick={() => goToProvider(p.slug)}
+                        className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-start transition-colors hover:bg-muted"
+                      >
+                        <Avatar className="size-9 shrink-0">
+                          {p.photo ? (
+                            <AvatarImage src={p.photo} alt={p.businessName} />
+                          ) : (
+                            <AvatarFallback className="bg-brand-50 text-sm font-bold text-brand-700">
+                              {p.businessName?.charAt(0)}
+                            </AvatarFallback>
+                          )}
+                        </Avatar>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-sm font-medium text-foreground">
+                            {p.businessName}
+                          </span>
+                          <span className="block truncate text-xs text-muted-foreground">
+                            {t(getCategoryName(p.category))}
+                            {p.area ? ` · ${prettyArea(p.area)}` : ""}
+                          </span>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {!loading && results.length === 0 && categories.length === 0 && (
+                <div className="px-3 py-6 text-center text-sm text-muted-foreground">
                   {t("No providers found")}
-                </li>
+                </div>
               )}
-              {!loading &&
-                results.map((p) => (
-                  <li key={p._id}>
-                    <button
-                      type="button"
-                      onClick={() => goToProvider(p.slug)}
-                      className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-start transition-colors hover:bg-muted"
-                    >
-                      <Avatar className="size-9 shrink-0">
-                        {p.photo ? (
-                          <AvatarImage src={p.photo} alt={p.businessName} />
-                        ) : (
-                          <AvatarFallback className="bg-brand-50 text-sm font-bold text-brand-700">
-                            {p.businessName?.charAt(0)}
-                          </AvatarFallback>
-                        )}
-                      </Avatar>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-medium text-foreground">
-                          {p.businessName}
-                        </span>
-                        <span className="block truncate text-xs text-muted-foreground">
-                          {t(getCategoryName(p.category))}
-                          {p.area ? ` · ${prettyArea(p.area)}` : ""}
-                        </span>
-                      </span>
-                    </button>
-                  </li>
-                ))}
-            </ul>
+            </div>
           )}
 
           <div className="border-t border-border p-1.5">

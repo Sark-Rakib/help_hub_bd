@@ -58,6 +58,7 @@ export const messages: Record<string, string> = {
   "Clear search": "অনুসন্ধান মুছুন",
   "Browse all providers": "সব প্রদানকারী দেখুন",
   "No providers found": "কোনো প্রদানকারী পাওয়া যায়নি",
+  "Suggested categories": "প্রস্তাবিত ক্যাটাগরি",
   "No providers match your search. Try a different keyword or browse all providers.":
     "আপনার অনুসন্ধানের সাথে মেলে এমন কোনো প্রদানকারী নেই। অন্য একটি কীওয়ার্ড চেষ্টা করুন বা সব প্রদানকারী দেখুন।",
   "Account menu": "অ্যাকাউন্ট মেনু",

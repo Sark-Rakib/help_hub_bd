@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useDeferredValue, useEffect, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SlidersHorizontal, Search, SearchX, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { CATEGORIES, DISTRICTS, getCategoryIcon, prettyArea, SORT_OPTIONS } from "@/lib/constants";
 import { ProviderCard, ProviderCardSkeleton } from "@/components/providers/ProviderCard";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { useProviders } from "@/hooks/useQueries";
+import { useCategories, useProviders } from "@/hooks/useQueries";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -25,7 +25,28 @@ export default function SearchPageClient({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const { data: dbCategories } = useCategories();
+
+  const allCategories = useMemo(() => {
+    const map = new Map<
+      string,
+      { slug: string; name: string; nameBn?: string; popular?: boolean }
+    >();
+    for (const c of CATEGORIES) map.set(c.slug, c);
+    for (const c of dbCategories ?? []) {
+      if (!map.has(c.slug)) {
+        map.set(c.slug, {
+          slug: c.slug,
+          name: c.name,
+          nameBn: c.nameBn,
+          popular: c.popular,
+        });
+      }
+    }
+    return Array.from(map.values());
+  }, [dbCategories]);
 
   const [search, setSearch] = useState(searchParams.get("search") ?? "");
   const [category, setCategory] = useState(searchParams.get("category") ?? "");
@@ -131,7 +152,7 @@ export default function SearchPageClient({
           >
             <Search className="size-4" /> {t("All services")}
           </button>
-          {CATEGORIES.map((cat) => {
+          {allCategories.map((cat) => {
             const Icon = getCategoryIcon(cat.slug);
             return (
               <button
@@ -143,7 +164,7 @@ export default function SearchPageClient({
                   category === cat.slug ? "bg-primary text-primary-foreground" : "hover:bg-muted"
                 )}
               >
-                <Icon className="size-4" /> {t(cat.name)}
+                <Icon className="size-4" /> {lang === "bn" ? (cat.nameBn || cat.name) : cat.name}
               </button>
             );
           })}

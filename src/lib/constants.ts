@@ -16,6 +16,8 @@ import {
   Phone,
   AlarmClock,
   Code,
+  Stethoscope,
+  Share2,
 } from "lucide-react";
 import type { Category, Location, RequestStatus } from "@/types";
 
@@ -154,6 +156,24 @@ const categoryMeta: Array<Omit<Category, "icon"> & { icon: LucideIcon }> = [
     nameBn: "",
     description: "Website design, development, maintenance and IT support.",
     icon: Code,
+    popular: true,
+  },
+  {
+    slug: "doctor",
+    name: "Doctor",
+    nameBn: "ডাক্তার",
+    description:
+      "Find trusted doctors and healthcare professionals for consultations, medical advice, and healthcare services.",
+    icon: Stethoscope,
+    popular: true,
+  },
+  {
+    slug: "social-media-expert",
+    name: "Social Media Expert",
+    nameBn: "সোশ্যাল মিডিয়া এক্সপার্ট",
+    description:
+      "Social media management, content creation, marketing, and audience growth services.",
+    icon: Share2,
     popular: true,
   },
 ];
