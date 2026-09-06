@@ -16,7 +16,7 @@ import {
   Refrigerator,
   ArrowRight,
   Send,
-  MessageCircle,
+  // MessageCircle,
   Globe,
 } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
@@ -47,25 +47,29 @@ export function Footer() {
           <div className="col-span-2 lg:col-span-2">
             <Logo />
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-              {t("A local services marketplace for Sherpur. Trusted providers, honest reviews, and an easy service request experience. Find the service you need, today.")}
+              {t(
+                "A local services marketplace for Sherpur. Trusted providers, honest reviews, and an easy service request experience. Find the service you need, today.",
+              )}
             </p>
             <div className="mt-4 flex gap-2">
               <Link
-                href="#"
+                href="https://www.facebook.com/sarkrakib/"
+                target="_blank"
                 aria-label="Facebook"
                 className="flex size-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 <Send className="size-4" />
               </Link>
-              <Link
+              {/* <Link
                 href="#"
                 aria-label="WhatsApp"
                 className="flex size-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 <MessageCircle className="size-4" />
-              </Link>
+              </Link> */}
               <Link
-                href="#"
+                href="https://sarkrakib.vercel.app"
+                target="_blank"
                 aria-label="Website"
                 className="flex size-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
@@ -98,22 +102,34 @@ export function Footer() {
             <h3 className="text-sm font-semibold">{t("For Providers")}</h3>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/become-provider" className="transition-colors hover:text-foreground">
+                <Link
+                  href="/become-provider"
+                  className="transition-colors hover:text-foreground"
+                >
                   {t("Become a Provider")}
                 </Link>
               </li>
               <li>
-                <Link href="/become-provider" className="transition-colors hover:text-foreground">
+                <Link
+                  href="/become-provider"
+                  className="transition-colors hover:text-foreground"
+                >
                   {t("Provider Guidelines")}
                 </Link>
               </li>
               <li>
-                <Link href="/#faq" className="transition-colors hover:text-foreground">
+                <Link
+                  href="/#faq"
+                  className="transition-colors hover:text-foreground"
+                >
                   {t("FAQ")}
                 </Link>
               </li>
               <li>
-                <Link href="/provider" className="transition-colors hover:text-foreground">
+                <Link
+                  href="/provider"
+                  className="transition-colors hover:text-foreground"
+                >
                   {t("Provider Dashboard")}
                 </Link>
               </li>
@@ -124,27 +140,42 @@ export function Footer() {
             <h3 className="text-sm font-semibold">{t("Help & Company")}</h3>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/#how-it-works" className="transition-colors hover:text-foreground">
+                <Link
+                  href="/#how-it-works"
+                  className="transition-colors hover:text-foreground"
+                >
                   {t("How It Works")}
                 </Link>
               </li>
               <li>
-                <Link href={`tel:${SUPPORT_PHONE}`} className="transition-colors hover:text-foreground">
+                <Link
+                  href={`tel:${SUPPORT_PHONE}`}
+                  className="transition-colors hover:text-foreground"
+                >
                   {SUPPORT_PHONE}
                 </Link>
               </li>
               <li>
-                <Link href={`mailto:${SUPPORT_EMAIL}`} className="transition-colors hover:text-foreground">
+                <Link
+                  href={`mailto:${SUPPORT_EMAIL}`}
+                  className="transition-colors hover:text-foreground"
+                >
                   {SUPPORT_EMAIL}
                 </Link>
               </li>
               <li>
-                <Link href="#" className="transition-colors hover:text-foreground">
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-foreground"
+                >
                   {t("Privacy Policy")}
                 </Link>
               </li>
               <li>
-                <Link href="#" className="transition-colors hover:text-foreground">
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-foreground"
+                >
                   {t("Terms & Conditions")}
                 </Link>
               </li>
@@ -154,7 +185,18 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
           <p>
-            © {new Date().getFullYear()} HelpHub BD. {t("Made with ❤️ for Sherpur.")}
+            © {new Date().getFullYear()} HelpHub BD. {t("Made for Sherpur.")}
+          </p>
+          <p>
+            Developed by{" "}
+            <Link
+              className="border-b hover:text-black uppercase"
+              target="_blank"
+              href="https://www.facebook.com/sarkrakib/"
+            >
+              {" "}
+              Rakib Sarker{" "}
+            </Link>{" "}
           </p>
           <Link
             href="/services"
