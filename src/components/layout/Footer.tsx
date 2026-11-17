@@ -109,14 +109,14 @@ export function Footer() {
                   {t("Become a Provider")}
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/become-provider"
                   className="transition-colors hover:text-foreground"
                 >
                   {t("Provider Guidelines")}
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/#faq"
@@ -149,6 +149,14 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="/emergency"
+                  className="transition-colors hover:text-foreground"
+                >
+                  {t("Emergency")}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={`tel:${SUPPORT_PHONE}`}
                   className="transition-colors hover:text-foreground"
                 >
@@ -165,7 +173,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/privacy-policy"
                   className="transition-colors hover:text-foreground"
                 >
                   {t("Privacy Policy")}
