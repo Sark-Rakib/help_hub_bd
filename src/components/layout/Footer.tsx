@@ -181,7 +181,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/terms-conditions"
                   className="transition-colors hover:text-foreground"
                 >
                   {t("Terms & Conditions")}
